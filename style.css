@@ -7,7 +7,7 @@ body {
 }
 
 fieldset {
-    background-color: #ffffff;
+    background: var(--tg-theme-bg-color); /* Теперь цвет совпадает с цветом фона body */
     border-radius: 8px;
     margin-bottom: 20px;
     padding: 20px;
@@ -17,18 +17,14 @@ fieldset {
 legend {
     font-weight: bold;
     padding: 0 10px;
-    background: var(--tg-theme-bg-color);
     color: var(--tg-theme-buttom-color);
-    border-radius: 8px;
 }
 
 label {
     display: block;
     margin: 10px 0;
     cursor: pointer;
-    background: var(--tg-theme-bg-color); /* Добавляем фон, соответствующий body */
-    padding: 5px; /* Добавляем немного отступа для лучшего визуального вида */
-    border-radius: 4px; /* Добавляем сглаживание углов для красоты */
+    /* Фон у label теперь наследуется от body, поэтому его можно убрать */
 }
 
 input[type="radio"], input[type="checkbox"] {
