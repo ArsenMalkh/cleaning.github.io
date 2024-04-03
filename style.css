@@ -3,39 +3,44 @@ body {
     padding: 20px;
     font-weight: 200;
     color: var(--tg-theme-text-color);
-    background: var(--tg-theme-bg-color);
+    background: var(--tg-theme-bg-color); /* Фон страницы */
 }
 
 fieldset {
-    border: none; /* Убираем границу */
+    border: 2px solid var(--tg-theme-buttom-color); /* Рамка с цветом кнопки */
+    border-radius: 8px;
     margin-bottom: 20px;
     padding: 20px;
-    background: transparent; /* Делаем фон прозрачным, чтобы просвечивал фон body */
+    background: transparent; /* Прозрачный фон */
 }
 
 legend {
     font-weight: bold;
     padding: 0 10px;
     color: var(--tg-theme-buttom-color);
+    background: transparent; /* Прозрачный фон */
 }
 
 label {
     display: block;
     margin: 10px 0;
     cursor: pointer;
-    /* Фон у label теперь наследуется от body, поэтому его можно убрать */
+    background: transparent; /* Прозрачный фон */
+    padding: 5px;
+    border-radius: 4px;
 }
 
+/* Стилизация радио кнопок и чекбоксов, чтобы их было видно */
 input[type="radio"], input[type="checkbox"] {
     margin-right: 8px;
-    transform: scale(1.2); /* Увеличиваем кнопки выбора */
     cursor: pointer;
+    /* Можно добавить собственные стили для радио кнопок и чекбоксов, если это необходимо */
 }
 
 button {
     background: var(--tg-theme-buttom-text-color);
     color: var(--tg-theme-buttom-color);
-    border: 0;
+    border: 2px solid var(--tg-theme-buttom-color); /* Рамка кнопки */
     border-radius: 5px;
     padding: 15px 30px; /* Увеличиваем размеры кнопки */
     font-size: 20px;
