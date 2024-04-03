@@ -23,8 +23,30 @@
         <label for="shower"><input type="checkbox" id="shower" name="remove[]" value="shower"> Душевая</label><br>
     </fieldset>
 
+    <!-- Добавленный раздел для выбора времени уборки -->
+    <fieldset>
+        <legend>В какое время вы хотите уборку?</legend>
+        <label for="cleaning-time">Выберите дату и время:</label>
+        <input type="datetime-local" id="cleaning-time" name="cleaning-time">
+    </fieldset>
+
+    <!-- Добавленный раздел для ввода адреса уборки -->
+    <fieldset>
+        <legend>Точный адрес уборки</legend>
+        <label for="address">Адрес:</label>
+        <input type="text" id="address" name="address">
+    </fieldset>
+
+    <!-- Добавленный раздел для комментариев к услуге -->
+    <fieldset>
+        <legend>Комментарии к услуге</legend>
+        <label for="comments">Ваши комментарии:</label>
+        <textarea id="comments" name="comments" rows="4"></textarea>
+    </fieldset>
+
     <button type="submit">Отправить</button>
 </form>
+
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
