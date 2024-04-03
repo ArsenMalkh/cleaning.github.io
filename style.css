@@ -7,7 +7,7 @@ body {
 }
 
 fieldset {
-    border: 2px solid var(--tg-theme-buttom-color); /* Рамка с цветом кнопки */
+    border: 2px solid var(--tg-theme-text-color); /* Рамка с цветом кнопки */
     border-radius: 8px;
     margin-bottom: 20px;
     padding: 20px;
