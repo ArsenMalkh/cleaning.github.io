@@ -17,7 +17,7 @@ fieldset {
 legend {
     font-weight: bold;
     padding: 0 10px;
-    color: #444;
+    color: var(--tg-theme-buttom-color);
 }
 
 label {
@@ -33,12 +33,12 @@ input[type="radio"], input[type="checkbox"] {
 button {
     background: var(--tg-theme-buttom-text-color);
     color: var(--tg-theme-buttom-color);
-    border: none;
-    border-radius: 4px;
+    border: 0;
+    border-radius: 5px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 20px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 500ms ease;
 }
 
 button:hover {
