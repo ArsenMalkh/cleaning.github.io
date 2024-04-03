@@ -3,7 +3,7 @@ body {
     padding: 20px;
     font-weight: 200;
     color: var(--tg-theme-text-color);
-    background: var(--tg-theme-bg-color); /* Фон страницы */
+    background: var(--tg-theme-bg-color) url('texture.jpg') repeat; /* Фон страницы */
 }
 
 fieldset {
