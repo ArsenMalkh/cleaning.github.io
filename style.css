@@ -2,7 +2,7 @@ body {
     font-family: 'Arial', sans-serif;
     padding: 20px;
     background-color: #f0f0f0;
-    background-image: url('4.png'); /* Замените 'background-image.jpg' на путь к вашему изображению */
+    background-image: url(--tg-theme-text-color); /* Замените 'background-image.jpg' на путь к вашему изображению */
     background-size: cover;
     color: #333;
 }
