@@ -11,7 +11,6 @@
         <legend>Какое общежитие вы хотите?</legend>
         <label for="dorm1"><input type="radio" id="dorm1" name="dorm" value="общ1"> Общ1</label><br>
         <label for="dorm2"><input type="radio" id="dorm2" name="dorm" value="общ2"> Общ2</label><br>
-        <!-- Добавьте больше общежитий по аналогии -->
         <label for="dorm10"><input type="radio" id="dorm10" name="dorm" value="общ10"> Общ10</label><br>
     </fieldset>
 
@@ -46,11 +45,65 @@
     <fieldset>
         <legend>Прикрепите картинки</legend>
         <input type="file" id="images" name="images" accept="image/*" multiple>
+        <div id="image-preview-container"></div>
     </fieldset>
 
     <button type="submit">Отправить</button>
 </form>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+document.getElementById('images').addEventListener('change', function(e) {
+    var files = Array.from(e.target.files);
+    files.forEach((file) => {
+        if(file.type.startsWith('image/')) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var div = document.createElement('div');
+                div.style.position = 'relative';
+                div.style.display = 'inline-block';
+                div.style.marginRight = '10px';
+                div.style.marginBottom = '10px';
+
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100px';
+                img.style.height = '100px';
+
+                var closeButton = document.createElement('button');
+                closeButton.innerHTML = '&times;'; // Использование символа '×'
+                closeButton.style.position = 'absolute';
+                closeButton.style.top = '0';
+                closeButton.style.right = '0';
+                closeButton.style.border = 'none';
+                closeButton.style.backgroundColor = 'transparent';
+                closeButton.style.color = 'black';
+                closeButton.style.fontSize = '16px';
+                closeButton.style.cursor = 'pointer';
+                closeButton.style.padding = '0 5px';
+                closeButton.style.display = 'flex';
+                closeButton.style.alignItems = 'center';
+                closeButton.style.justifyContent = 'center';
+                closeButton.style.height = '20px';
+                closeButton.style.width = '20px';
+                closeButton.onclick = function() {
+                    div.remove();
+                };
+
+                div.appendChild(img);
+                div.appendChild(closeButton);
+                document.getElementById('image-preview-container').prepend(div);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+// Вспомогательная функция для обновления списка файлов
+function FileListItems (files) {
+    var b = new ClipboardEvent("").clipboardData || new DataTransfer();
+    for (var i = 0, len = files.length; i<len; i++) b.items.add(files[i]);
+    return b.files;
+}
+</script>
+
 </body>
 </html>
