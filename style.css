@@ -1,10 +1,9 @@
 body {
     font-family: 'Arial', sans-serif;
     padding: 20px;
-    background-color: #f0f0f0;
-    background-image: var(--tg-theme-text-color); /* Замените 'background-image.jpg' на путь к вашему изображению */
-    background-size: cover;
-    color: #333;
+    font-weight: 200;
+    color: var(--tg-theme-text-color);
+    background: var(--tg-theme-bg-color);
 }
 
 fieldset {
@@ -32,8 +31,8 @@ input[type="radio"], input[type="checkbox"] {
 }
 
 button {
-    background-color: #007bff;
-    color: white;
+    background: var(--tg-theme-buttom-text-color);
+    color: var(--tg-theme-buttom-color);
     border: none;
     border-radius: 4px;
     padding: 10px 20px;
@@ -43,5 +42,5 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background: var(--tg-theme-secondary-bg-color);
 }
