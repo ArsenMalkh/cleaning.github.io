@@ -7,11 +7,10 @@ body {
 }
 
 fieldset {
-    background: var(--tg-theme-bg-color); /* Теперь цвет совпадает с цветом фона body */
-    border-radius: 8px;
+    border: none; /* Убираем границу */
     margin-bottom: 20px;
     padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: transparent; /* Делаем фон прозрачным, чтобы просвечивал фон body */
 }
 
 legend {
