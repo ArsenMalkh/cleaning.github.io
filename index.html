@@ -3,6 +3,12 @@
 <head>
     <title>Форма выбора общежития</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        #image-preview-container img {
+            max-width: 100px; /* Предварительный просмотр с ограниченной шириной */
+            margin: 10px; /* Отступы вокруг изображений */
+        }
+    </style>
 </head>
 <body>
 
@@ -50,6 +56,26 @@
 
     <button type="submit">Отправить</button>
 </form>
+
+<script>
+    document.getElementById('images').addEventListener('change', function(event) {
+        var imageContainer = document.getElementById('image-preview-container');
+        imageContainer.innerHTML = ''; // Очищаем контейнер перед новой загрузкой
+        var files = event.target.files; // Получаем выбранные файлы
+
+        for (var i = 0; i < files.length; i++) {
+            (function(file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.src = e.target.result;
+                    imageContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            })(files[i]);
+        }
+    });
+</script>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </body>
 </html>
