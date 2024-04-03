@@ -17,15 +17,18 @@ fieldset {
 legend {
     font-weight: bold;
     padding: 0 10px;
-    background: var(--tg-theme-bg-color); /* Установите тот же цвет фона, что и у body */
+    background: var(--tg-theme-bg-color);
     color: var(--tg-theme-buttom-color);
-    border-radius: 8px; /* Добавляем сглаживание углов, чтобы соответствовать fieldset */
+    border-radius: 8px;
 }
 
 label {
     display: block;
     margin: 10px 0;
     cursor: pointer;
+    background: var(--tg-theme-bg-color); /* Добавляем фон, соответствующий body */
+    padding: 5px; /* Добавляем немного отступа для лучшего визуального вида */
+    border-radius: 4px; /* Добавляем сглаживание углов для красоты */
 }
 
 input[type="radio"], input[type="checkbox"] {
