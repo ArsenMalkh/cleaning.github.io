@@ -1,14 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Форма выбора общежития</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div id="main">
-        <h1>ОНЛАЙН МАП</h1>
-        <p>To esim ee aya axpeeer</p>
-    </div>
+
+<form action="/submit-your-choice" method="post">
+    <fieldset>
+        <legend>Какое общежитие вы хотите?</legend>
+        <label for="dorm1"><input type="radio" id="dorm1" name="dorm" value="общ1"> Общ1</label><br>
+        <label for="dorm2"><input type="radio" id="dorm2" name="dorm" value="общ2"> Общ2</label><br>
+        <!-- Добавьте больше общежитий по аналогии -->
+        <label for="dorm10"><input type="radio" id="dorm10" name="dorm" value="общ10"> Общ10</label><br>
+    </fieldset>
+
+    <fieldset>
+        <legend>Что вы хотите убрать?</legend>
+        <label for="corridor"><input type="checkbox" id="corridor" name="remove[]" value="corridor"> Коридор</label><br>
+        <label for="kitchen"><input type="checkbox" id="kitchen" name="remove[]" value="kitchen"> Кухня</label><br>
+        <label for="bathroom"><input type="checkbox" id="bathroom" name="remove[]" value="bathroom"> Уборная</label><br>
+        <label for="shower"><input type="checkbox" id="shower" name="remove[]" value="shower"> Душевая</label><br>
+    </fieldset>
+
+    <button type="submit">Отправить</button>
+</form>
+
 </body>
 </html>

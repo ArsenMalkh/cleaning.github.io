@@ -1,0 +1,47 @@
+body {
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+    background-color: #f0f0f0;
+    background-image: url('4.png'); /* Замените 'background-image.jpg' на путь к вашему изображению */
+    background-size: cover;
+    color: #333;
+}
+
+fieldset {
+    background-color: #ffffff;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 10px;
+    color: #444;
+}
+
+label {
+    display: block;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
