@@ -1,70 +1,100 @@
 <!DOCTYPE html>
- 
 <html>
- 
 <head>
- 
-    <title>Take or select photo(s) and upload</title>
- 
-    <script type="text/javascript">
- 
-      function fileSelected() {
- 
-        var count = document.getElementById('fileToUpload').files.length;
- 
-              document.getElementById('details').innerHTML = "";
- 
-              for (var index = 0; index < count; index ++)
- 
-              {
- 
-                     var file = document.getElementById('fileToUpload').files[index];
- 
-                     var fileSize = 0;
- 
-                     if (file.size > 1024 * 1024)
- 
-                            fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
- 
-                     else
- 
-                            fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
- 
-                     document.getElementById('details').innerHTML += 'Name: ' + file.name + '<br>Size: ' + fileSize + '<br>Type: ' + file.type;
- 
-                     document.getElementById('details').innerHTML += '<p>';
- 
-              }
-      }
- 
-    </script>
- 
+    <title>Форма выбора общежития</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
- 
 <body>
- 
-  <form id="form1" enctype="multipart/form-data" method="post" action="Upload.aspx">
- 
-    <div>
- 
-      <label for="fileToUpload">Take or select photo(s)</label><br />
- 
-      <input type="file" name="fileToUpload" id="fileToUpload" onchange="fileSelected();" accept="image/*" capture="camera" />
- 
-    </div>
- 
-    <div id="details"></div>
- 
-    <div>
- 
-      <input type="button" onclick="uploadFile()" value="Upload" />
- 
-    </div>
- 
-    <div id="progress"></div>
- 
-  </form>
- 
+<form action="/submit-your-choice" method="post">
+    <fieldset>
+        <legend>Какое общежитие вы хотите?</legend>
+        <label for="dorm1"><input type="radio" id="dorm1" name="dorm" value="общ1"> Общ1</label><br>
+        <label for="dorm2"><input type="radio" id="dorm2" name="dorm" value="общ2"> Общ2</label><br>
+        <label for="dorm10"><input type="radio" id="dorm10" name="dorm" value="общ10"> Общ10</label><br>
+    </fieldset>
+    <fieldset>
+        <legend>Что вы хотите убрать?</legend>
+        <label for="corridor"><input type="checkbox" id="corridor" name="remove[]" value="corridor"> Коридор</label><br>
+        <label for="kitchen"><input type="checkbox" id="kitchen" name="remove[]" value="kitchen"> Кухня</label><br>
+        <label for="bathroom"><input type="checkbox" id="bathroom" name="remove[]" value="bathroom"> Уборная</label><br>
+        <label for="shower"><input type="checkbox" id="shower" name="remove[]" value="shower"> Душевая</label><br>
+    </fieldset>
+    <fieldset>
+        <legend>В какое время вы хотите уборку?</legend>
+        <label for="cleaning-date">Выберите дату:</label>
+        <input type="date" id="cleaning-date" name="cleaning-date"><br>
+        <label for="cleaning-time">Выберите время:</label>
+        <input type="time" id="cleaning-time" name="cleaning-time">
+    </fieldset>
+    <fieldset>
+        <legend>Точный адрес уборки</legend>
+        <label for="address">Адрес:</label>
+        <input type="text" id="address" name="address">
+    </fieldset>
+    <fieldset>
+        <legend>Комментарии к услуге</legend>
+        <label for="comments">Ваши комментарии:</label>
+        <textarea id="comments" name="comments" rows="4"></textarea>
+    </fieldset>
+    <fieldset>
+        <legend>Прикрепите картинки</legend>
+        <input type="file" id="images" name="images" accept="image/*" multiple>
+        <div id="image-preview-container"></div>
+    </fieldset>
+
+    <button type="submit">Отправить</button>
+</form>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<script>
+document.getElementById('images').addEventListener('change', function(e) {
+    var files = Array.from(e.target.files);
+    files.forEach((file) => {
+        if(file.type.startsWith('image/')) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var div = document.createElement('div');
+                div.style.position = 'relative';
+                div.style.display = 'inline-block';
+                div.style.marginRight = '10px';
+                div.style.marginBottom = '10px';
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.width = '100px';
+                img.style.height = '100px';
+                var closeButton = document.createElement('button');
+                closeButton.innerHTML = '&times;'; // Использование символа '×'
+                closeButton.style.position = 'absolute';
+                closeButton.style.top = '0';
+                closeButton.style.right = '0';
+                closeButton.style.border = 'none';
+                closeButton.style.backgroundColor = 'transparent';
+                closeButton.style.color = 'black';
+                closeButton.style.fontSize = '16px';
+                closeButton.style.cursor = 'pointer';
+                closeButton.style.padding = '0 5px';
+                closeButton.style.display = 'flex';
+                closeButton.style.alignItems = 'center';
+                closeButton.style.justifyContent = 'center';
+                closeButton.style.height = '20px';
+                closeButton.style.width = '20px';
+                closeButton.onclick = function() {
+                    div.remove();
+                };
+                div.appendChild(img);
+                div.appendChild(closeButton);
+                document.getElementById('image-preview-container').prepend(div);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+// Вспомогательная функция для обновления списка файлов
+function FileListItems (files) {
+    var b = new ClipboardEvent("").clipboardData || new DataTransfer();
+    for (var i = 0, len = files.length; i<len; i++) b.items.add(files[i]);
+    return b.files;
+}
+</script>
 </body>
- 
 </html>
