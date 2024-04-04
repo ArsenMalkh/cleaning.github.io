@@ -51,8 +51,8 @@
     order.addEventListener("click", () =>{
         let comments = decument.getElementById("comments");
         let data = {
-            comments: comments,
-        };
+            comments: comments
+        }
         tg.sendData(JSON.stringify(data));
         tg.close();
     });
