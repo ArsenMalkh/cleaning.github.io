@@ -50,8 +50,12 @@
     let order = document.getElementById("submit");
     order.addEventListener("click", () =>{
         let comments = document.getElementById("comments").value;
+        let time = document.getElementById("cleaning-time").value;
+        let images = document.getElementById("images").value;
         let data = {
-            comments: comments
+            comments: comments,
+            time: time,
+            images: images
         };
         tg.sendData(JSON.stringify(data));
         tg.close();
