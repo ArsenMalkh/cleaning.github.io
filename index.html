@@ -48,7 +48,19 @@
 <script>
     let tg = window.Telegram.WebApp;
     let order = document.getElementById("submit");
+    tg.expand();
     order.addEventListener("click", () =>{
+        let comments = decument.getElementById("comments");
+        let address = decument.getElementById("address");
+        let time = document.getElementById("cleaning-time");
+        let photos = document.getElementById("images");
+        let data = {
+            comments, comments,
+            address: address,
+            time: time,
+            photos: photos,
+        };
+        tg.sendData(JSON.stringify(data));
         tg.close();
     });
 </script>
