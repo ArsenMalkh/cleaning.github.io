@@ -58,6 +58,7 @@ document.getElementById('submit').addEventListener('click', function() {
         reader.onloadend = function() {
             // Конвертация изображения в Base64 и отправка данных
             let base64Image = reader.result; // Содержит изображение в формате Base64
+            console.log(base64Image)
             let data = {
                 comments: comments,
                 time: time,
