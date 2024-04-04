@@ -49,7 +49,7 @@
     let tg = window.Telegram.WebApp;
     let order = document.getElementById("submit");
     order.addEventListener("click", () =>{
-        let comments = decument.getElementById("comments");
+        let comments = decument.getElementById("comments").value;
         let data = {
             comments: comments
         }
