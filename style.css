@@ -1,4 +1,4 @@
-body {
+/* body {
     font-family: 'Arial', sans-serif;
     padding: 20px;
     font-weight: 200;
@@ -50,4 +50,30 @@ button {
 
 button:hover {
     background: var(--tg-theme-secondary-bg-color);
+}
+ */
+
+#gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.image-container {
+  position: relative;
+  margin: 10px;
+}
+.image-container img {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 8px;
+}
+.remove-image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
 }
