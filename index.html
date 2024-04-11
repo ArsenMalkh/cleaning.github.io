@@ -59,7 +59,8 @@
     </fieldset>
     <fieldset>
         <legend>Прикрепите картинки</legend>
-        <input type="file" id="fileToUpload" onchange="fileSelected();" accept="image/*" multiple />
+        <input type="file" id="fileToUpload" name="images" accept="image/*" multiple onchange="fileSelected()">
+        <!-- <input type="file" id="fileToUpload" onchange="fileSelected();" accept="image/*" multiple /> -->
         <div id="imagePreview"></div>
     </fieldset>
 
