@@ -1,7 +1,28 @@
-<!-- <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Форма выбора общежития</title>
+    <meta charset="UTF-8">
+    <title>Form with Image Upload and Preferences</title>
+    <style>
+        .image-container {
+            position: relative;
+            display: inline-block;
+            margin: 5px;
+        }
+        .uploaded-image {
+            width: 100px; /* Adjust as needed */
+            height: auto;
+        }
+        .delete-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: white;
+            background-color: red;
+            cursor: pointer;
+            padding: 0 5px;
+        }
+    </style>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -33,118 +54,88 @@
     </fieldset>
     <fieldset>
         <legend>Комментарии к услуге</legend>
-        <label for="comments">Ваши комментарии:</label>
-        <textarea id="comments" name="comments" rows="4"></textarea>
+        <label for="address">Адрес:</label>
+        <input type="text" id="address" name="address">
     </fieldset>
     <fieldset>
         <legend>Прикрепите картинки</legend>
-        <input type="file" id="images" name="images" accept="image/*" multiple>
-        <div id="image-preview-container"></div>
+        <input type="file" id="fileToUpload" onchange="fileSelected();" accept="image/*" multiple />
+        <div id="imagePreview"></div>
     </fieldset>
 
-    <button id="submit">Отправить</button>
+    <button type="button" onclick="uploadFiles()">Upload</button>
+    <button type="submit" id="submit">Отправить</button>
 </form>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
-document.getElementById('submit').addEventListener('click', function() {
-    let comments = document.getElementById('comments').value;
-    let time = document.getElementById('cleaning-time').value;
-    let imageInput = document.getElementById('images');
+var selectedFiles = []; // Store selected files
 
-    if (imageInput.files.length > 0) {
-        let file = imageInput.files[0];
-        let reader = new FileReader();
+function fileSelected() {
+    var files = document.getElementById('fileToUpload').files;
+    var imagePreview = document.getElementById('imagePreview');
 
-        reader.onloadend = function() {
-            // Конвертация изображения в Base64 и отправка данных
-            let base64Image = reader.result; // Содержит изображение в формате Base64
-            console.log(base64Image)
-            let data = {
-                comments: comments,
-                time: time,
-                image: base64Image
+    Array.from(files).forEach((file) => {
+        selectedFiles.push(file);
+
+        var fileId = selectedFiles.length - 1; // File ID is its index in the array
+
+        var reader = new FileReader();
+        var imageContainer = document.createElement('div');
+        imageContainer.classList.add('image-container');
+
+        reader.onload = function (e) {
+            var img = document.createElement('img');
+            img.src = e.target.result;
+            img.classList.add('uploaded-image');
+
+            var deleteButton = document.createElement('span');
+            deleteButton.innerHTML = 'x';
+            deleteButton.classList.add('delete-button');
+            deleteButton.onclick = function () {
+                imageContainer.remove();
+                delete selectedFiles[fileId]; // Remove file from the array
             };
 
-            window.Telegram.WebApp.sendData(JSON.stringify(data));
-            window.Telegram.WebApp.close();
+            imageContainer.appendChild(img);
+            imageContainer.appendChild(deleteButton);
+            imagePreview.appendChild(imageContainer);
         };
 
-        reader.readAsDataURL(file); // Читаем файл
-    } else {
-        // Обработка случая, когда изображение не выбрано
-        // Можно отправить данные без изображения или показать ошибку
-    }
-});
-</script>
-<script>
-document.getElementById('images').addEventListener('change', function(e) {
-    var files = Array.from(e.target.files);
-    files.forEach((file) => {
-        if(file.type.startsWith('image/')) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                var div = document.createElement('div');
-                div.style.position = 'relative';
-                div.style.display = 'inline-block';
-                div.style.marginRight = '10px';
-                div.style.marginBottom = '10px';
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.width = '100px';
-                img.style.height = '100px';
-                var closeButton = document.createElement('button');
-                closeButton.innerHTML = '&times;'; // Использование символа '×'
-                closeButton.style.position = 'absolute';
-                closeButton.style.top = '0';
-                closeButton.style.right = '0';
-                closeButton.style.border = 'none';
-                closeButton.style.backgroundColor = 'transparent';
-                closeButton.style.color = 'black';
-                closeButton.style.fontSize = '16px';
-                closeButton.style.cursor = 'pointer';
-                closeButton.style.padding = '0 5px';
-                closeButton.style.display = 'flex';
-                closeButton.style.alignItems = 'center';
-                closeButton.style.justifyContent = 'center';
-                closeButton.style.height = '20px';
-                closeButton.style.width = '20px';
-                closeButton.onclick = function() {
-                    div.remove();
-                };
-                div.appendChild(img);
-                div.appendChild(closeButton);
-                document.getElementById('image-preview-container').prepend(div);
-            };
-            reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+    });
+
+    document.getElementById('fileToUpload').value = ""; // Clear the input
+}
+
+function uploadFiles() {
+    // Collect other form data along with the image
+    var formData = new FormData(document.querySelector('form'));
+    selectedFiles.forEach((file, index) => {
+        if (file) { // Check if the file wasn't deleted
+            formData.append('images[]', file, file.name);
         }
     });
-});
-// Вспомогательная функция для обновления списка файлов
-function FileListItems (files) {
-    var b = new ClipboardEvent("").clipboardData || new DataTransfer();
-    for (var i = 0, len = files.length; i<len; i++) b.items.add(files[i]);
-    return b.files;
+
+    // Replace this URL with your actual upload script
+    fetch('/submit-your-choice', { 
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json()) // Assuming the server responds with JSON
+    .then(result => {
+        console.log(result); // Handle the server response here
+        // Optionally close the Telegram WebApp or redirect the user
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
+
+// Prevent the default form submission
+document.getElementById('submit').addEventListener('click', function(event) {
+    event.preventDefault();
+    uploadFiles(); // You could integrate the Telegram send data logic here if needed
+});
 </script>
 </body>
 </html>
- -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Загрузка и отображение изображений</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-<input type="file" id="imageUpload" multiple accept="image/*" />
-<span id="imageCount">0 изображений</span>
-<div id="gallery"></div>
-<button id="submitImages">Отправить</button>
-
-<script src="script.js"></script>
-</body>
-</html>
-
- 
