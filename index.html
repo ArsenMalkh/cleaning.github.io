@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Upload and Preview Images with Delete Option</title>
+    <title>Form with Image Upload and Preferences</title>
     <style>
         .image-container {
             position: relative;
@@ -23,18 +23,50 @@
             padding: 0 5px;
         }
     </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
+<form action="/submit-your-choice" method="post">
+    <fieldset>
+        <legend>Какое общежитие вы хотите?</legend>
+        <label for="dorm1"><input type="radio" id="dorm1" name="dorm" value="общ1"> Общ1</label><br>
+        <label for="dorm2"><input type="radio" id="dorm2" name="dorm" value="общ2"> Общ2</label><br>
+        <label for="dorm10"><input type="radio" id="dorm10" name="dorm" value="общ10"> Общ10</label><br>
+    </fieldset>
+    <fieldset>
+        <legend>Что вы хотите убрать?</legend>
+        <label for="corridor"><input type="checkbox" id="corridor" name="remove[]" value="corridor"> Коридор</label><br>
+        <label for="kitchen"><input type="checkbox" id="kitchen" name="remove[]" value="kitchen"> Кухня</label><br>
+        <label for="bathroom"><input type="checkbox" id="bathroom" name="remove[]" value="bathroom"> Уборная</label><br>
+        <label for="shower"><input type="checkbox" id="shower" name="remove[]" value="shower"> Душевая</label><br>
+    </fieldset>
+    <fieldset>
+        <legend>В какое время вы хотите уборку?</legend>
+        <label for="cleaning-date">Выберите дату:</label>
+        <input type="date" id="cleaning-date" name="cleaning-date"><br>
+        <label for="cleaning-time">Выберите время:</label>
+        <input type="time" id="cleaning-time" name="cleaning-time">
+    </fieldset>
+    <fieldset>
+        <legend>Точный адрес уборки</legend>
+        <label for="address">Адрес:</label>
+        <input type="text" id="address" name="address">
+    </fieldset>
+    <fieldset>
+        <legend>Комментарии к услуге</legend>
+        <label for="address">Адрес:</label>
+        <input type="text" id="address" name="address">
+    </fieldset>
+    <fieldset>
+        <legend>Прикрепите картинки</legend>
+        <input type="file" id="fileToUpload" onchange="fileSelected();" accept="image/*" multiple />
+        <div id="imagePreview"></div>
+    </fieldset>
 
-<div>
-    <label for="fileToUpload">Take or select photo(s)</label><br />
-    <input type="file" id="fileToUpload" onchange="fileSelected();" accept="image/*" multiple />
-</div>
-<div id="imagePreview"></div>
-<div>
-    <button onclick="uploadFiles()">Upload</button>
-</div>
-
+    <button type="button" onclick="uploadFiles()">Upload</button>
+    <button type="submit" id="submit">Отправить</button>
+</form>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
 var selectedFiles = []; // Store selected files
 
@@ -76,26 +108,34 @@ function fileSelected() {
 }
 
 function uploadFiles() {
-    var formData = new FormData();
+    // Collect other form data along with the image
+    var formData = new FormData(document.querySelector('form'));
     selectedFiles.forEach((file, index) => {
         if (file) { // Check if the file wasn't deleted
-            formData.append('fileToUpload[]', file, file.name);
+            formData.append('images[]', file, file.name);
         }
     });
 
-    fetch('Upload.aspx', { // Replace 'Upload.aspx' with your actual upload URL
+    // Replace this URL with your actual upload script
+    fetch('/submit-your-choice', { 
         method: 'POST',
         body: formData
     })
-    .then(response => response.text())
+    .then(response => response.json()) // Assuming the server responds with JSON
     .then(result => {
         console.log(result); // Handle the server response here
+        // Optionally close the Telegram WebApp or redirect the user
     })
     .catch(error => {
         console.error('Error:', error);
     });
 }
-</script>
 
+// Prevent the default form submission
+document.getElementById('submit').addEventListener('click', function(event) {
+    event.preventDefault();
+    uploadFiles(); // You could integrate the Telegram send data logic here if needed
+});
+</script>
 </body>
 </html>
